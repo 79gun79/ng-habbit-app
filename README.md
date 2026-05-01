@@ -1,50 +1,54 @@
-# Welcome to your Expo app 👋
+# NG 습관 앱
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Expo + React Native 기반의 크로스플랫폼 습관 트래커 앱입니다. iOS, Android, Web을 지원합니다.
 
-## Get started
+## 시작하기
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 설치
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 개발 서버 실행
 
-## Learn more
+```bash
+npm start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+실행 후 다음 중 선택할 수 있습니다:
+- iOS 시뮬레이터 (macOS)
+- Android 에뮬레이터
+- Expo Go 앱 (QR코드 스캔)
+- 웹 브라우저
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 스크립트
 
-## Join the community
+| 명령어 | 설명 |
+|--------|------|
+| `npm start` | Expo 개발 서버 시작 |
+| `npm run android` | Android 에뮬레이터 실행 |
+| `npm run ios` | iOS 시뮬레이터 실행 |
+| `npm run web` | 웹 브라우저 실행 |
+| `npm run lint` | ESLint 코드 검사 |
+| `npm run reset-project` | 프로젝트 초기화 |
 
-Join our community of developers creating universal apps.
+## 주요 기능
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **습관 관리**: 습관 추가, 삭제, 오늘 완료 토글
+- **통계 화면**: 오늘의 달성률 원형 그래프 및 습관별 진행 바
+- **Google 로그인**: Google OAuth를 통한 사용자 인증
+- **다크/라이트 모드**: 시스템 설정 자동 반영
+
+## 기술 스택
+
+- **프레임워크**: Expo ~54 / React Native 0.81
+- **라우팅**: expo-router (파일 기반)
+- **저장소**: AsyncStorage (로컬)
+- **인증**: expo-auth-session (Google OAuth)
+- **언어**: TypeScript
+
+## 문서
+
+- [기여 가이드](docs/CONTRIB.md) - 개발 환경 설정, 워크플로우
+- [운영 런북](docs/RUNBOOK.md) - 배포, 문제 해결, 롤백
