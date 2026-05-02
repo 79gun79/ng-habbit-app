@@ -1,9 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useFocusEffect } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "expo-router";
 import React, { useCallback, useEffect, useRef } from "react";
-import { Animated, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Animated,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useAuth } from "@/context/auth";
 import { Habit, isHabitDoneToday, useHabits } from "@/context/habits";
 
 // ── 개별 습관 진행 바 ──────────────────────────────────────────
@@ -233,6 +243,12 @@ const circleStyles = StyleSheet.create({
 // ── 메인 화면 ──────────────────────────────────────────────────
 export default function StatsScreen() {
   const { habits, fetchHabits } = useHabits();
+  const { user } = useAuth();
+  const navigation = useNavigation();
+
+  const openProfileDrawer = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -258,9 +274,20 @@ export default function StatsScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* 헤더 */}
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>통계</Text>
-          <Text style={styles.headerSub}>오늘의 습관 달성 현황</Text>
+        <View style={[styles.header, styles.headerRow]}>
+          <View>
+            <Text style={styles.headerTitle}>통계</Text>
+            <Text style={styles.headerSub}>오늘의 습관 달성 현황</Text>
+          </View>
+          <TouchableOpacity onPress={openProfileDrawer} activeOpacity={0.8}>
+            {user?.picture ? (
+              <Image source={{ uri: user.picture }} style={styles.avatar} />
+            ) : (
+              <View style={styles.headerBadge}>
+                <Ionicons name="person" size={20} color="#08111F" />
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
 
         {/* 원형 진행률 카드 */}
@@ -327,8 +354,22 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F5F5FA" },
   scroll: { paddingBottom: 40 },
   header: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 12 },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   headerTitle: { fontSize: 28, fontWeight: "800", color: "#1A1A2E" },
   headerSub: { fontSize: 13, color: "#9E9E9E", marginTop: 2 },
+  headerBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#E8EAEC",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatar: { width: 44, height: 44, borderRadius: 22 },
   card: {
     flexDirection: "row",
     alignItems: "center",

@@ -1,19 +1,20 @@
 import { Ionicons } from "@expo/vector-icons";
+import { DrawerActions } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useNavigation } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    Dimensions,
-    FlatList,
-    Image,
-    Modal,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  Dimensions,
+  FlatList,
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -39,6 +40,11 @@ interface Photo {
 
 export default function GalleryScreen() {
   const { user } = useAuth();
+  const navigation = useNavigation();
+
+  const openProfileDrawer = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Photo | null>(null);
@@ -204,6 +210,15 @@ export default function GalleryScreen() {
           <Text style={styles.title}>갤러리</Text>
           <Text style={styles.subtitle}>{photos.length}개의 사진</Text>
         </View>
+        <TouchableOpacity onPress={openProfileDrawer} activeOpacity={0.8}>
+          {user?.picture ? (
+            <Image source={{ uri: user.picture }} style={styles.avatar} />
+          ) : (
+            <View style={styles.headerBadge}>
+              <Ionicons name="person" size={20} color="#08111F" />
+            </View>
+          )}
+        </TouchableOpacity>
       </View>
 
       {loading ? (
@@ -344,11 +359,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F8FA",
   },
   header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: PADDING,
     paddingTop: 8,
     paddingBottom: 12,
     backgroundColor: "#F8F8FA",
   },
+  headerBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#E8EAEC",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatar: { width: 44, height: 44, borderRadius: 22 },
   title: {
     fontSize: 28,
     fontWeight: "700",

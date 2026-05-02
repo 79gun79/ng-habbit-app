@@ -3,14 +3,14 @@ import { DrawerActions } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
-    FlatList,
-    Image,
-    RefreshControl,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  RefreshControl,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
